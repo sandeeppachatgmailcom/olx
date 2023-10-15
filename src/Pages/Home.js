@@ -10,8 +10,9 @@ function Home(props) {
   return (
     <div className="homeParentDiv">
       <Header />
-      <Banner />
+      <Banner location="header" />
       <Posts />
+      <Banner location="footer"/>
       <Footer />
     </div>
   );

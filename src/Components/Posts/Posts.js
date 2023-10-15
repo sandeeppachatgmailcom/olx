@@ -8,9 +8,9 @@ function Posts() {
   return (
     <div className="postParentDiv">
       <div className="moreView">
-        <div className="heading">
+        <div className="heading mb-3">
           <span>Quick Menu</span>
-          <span>View more</span>
+          <span className='me-3'>View more</span>
         </div>
         <div className="cards">
           <div

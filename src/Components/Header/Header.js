@@ -1,5 +1,4 @@
 import React from 'react';
-
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
 import Search from '../../assets/Search';
@@ -10,7 +9,7 @@ function Header() {
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName">
+        <div className="brandName ps-3">
           <OlxLogo></OlxLogo>
         </div>
         <div className="placeSearch">
@@ -19,7 +18,7 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="productSearch">
-          <div className="input">
+          <div className="input ps-2">
             <input
               type="text"
               placeholder="Find car,mobile phone and more..."
@@ -34,15 +33,15 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
-          <span>Login</span>
+          <span className='fw-bold'>Login</span>
           <hr />
         </div>
 
-        <div className="sellMenu">
+        <div className="sellMenu me-4">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
-            <span>SELL</span>
+            <span className='fw-bold'>SELL</span>
           </div>
         </div>
       </div>
