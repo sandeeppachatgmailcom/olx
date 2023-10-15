@@ -33,6 +33,8 @@ function Posts() {
           </div>
         </div>
       </div>
+
+      
       <div className="recommendations">
         <div className="heading">
           <span>Fresh recommendations</span>

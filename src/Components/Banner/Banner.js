@@ -4,7 +4,7 @@ import Arrow from '../../assets/Arrow'
 function Banner(props) {
   return (
     <div className="bannerParentDiv ms-0">
-      {props.location === "header" && <div className="bannerChildDiv">
+      {props.menubar && <div className="bannerChildDiv">
         <div className="menuBar">
           <div className="categoryMenu mt-2 my-auto">
             <span>ALL CATEGORIES</span>
@@ -22,16 +22,15 @@ function Banner(props) {
         </div>
       </div>}
       {props.location === "header" &&
-
         <><div id="carouselExampleControls" className="carousel slide" data-bs-ride="carousel">
           <div className="carousel-inner">
             <div className="carousel-item active">
               <img className="d-block w-100"  src="../../../Images/banner1.png" alt="Banner" />
             </div>
-            <div class="carousel-item">
+            <div className="carousel-item">
             <img className="d-block w-100"  src="../../../Images/banner2.png" alt="Banner" />
             </div>
-            <div class="carousel-item">
+            <div className="carousel-item">
             <img className="d-block w-100"  src="../../../Images/banner3.png" alt="Banner" />
             </div>
           </div>

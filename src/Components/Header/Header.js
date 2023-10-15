@@ -33,7 +33,9 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="loginPage">
+          <a href="/login">
           <span className='fw-bold'>Login</span>
+          </a>
           <hr />
         </div>
 

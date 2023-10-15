@@ -10,7 +10,7 @@ function Home(props) {
   return (
     <div className="homeParentDiv">
       <Header />
-      <Banner location="header" />
+      <Banner location="header" menubar/>
       <Posts />
       <Banner location="footer"/>
       <Footer />
