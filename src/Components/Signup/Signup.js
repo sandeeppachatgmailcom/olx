@@ -51,6 +51,7 @@ export default function Signup() {
               await addDoc(usersCollection, userDocData)
                 .then((docRef) => {
                   // console.log("Document added with ID: ", docRef.id);  //test
+                  alert('User account created successfully');     //test
                   navigate('/login');
                 })
                 .catch((error) => {
@@ -107,7 +108,7 @@ export default function Signup() {
                 <div className="text-center mb-2">
                   <button type="submit" className="btn btn-primary w-50">Signup</button>
                 </div>
-                <p className="text-center">Already have account? <a href="/login">Login</a></p>
+                <p className="text-center">Already have account? <span onClick={() => navigate("/login")} style={{cursor:'pointer'}}>Login</span></p>
               </div>
             </form>
           </div>

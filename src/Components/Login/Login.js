@@ -34,7 +34,8 @@ function Login() {
           alert("Logged IN")
           navigate('/')
         }).catch((err) => {
-          alert(err.message)
+          if(err.message ==="Firebase: Error (auth/network-request-failed).")  alert("Network Error => "+ err.message)
+          else alert("Wrong Credentials =>"+ err.message)
         })
 
     } catch (error) {
@@ -74,7 +75,7 @@ function Login() {
                 <div className="text-center mb-2">
                   <button type="submit" className="btn btn-primary w-50">Login</button>
                 </div>
-                <p className="text-center">New to OLX? <a href="/signup">Signup</a></p>
+                <p className="text-center">New to OLX? <span onClick={() => navigate("/signup")} style={{cursor:'pointer'}}>Signup</span></p>
               </div>
             </form>
           </div>

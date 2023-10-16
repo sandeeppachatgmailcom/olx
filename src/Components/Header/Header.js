@@ -63,7 +63,7 @@ function Header() {
               <h6 onClick={handleLogout} className='text-end'>Logout</h6>
             </>
             :
-            <a href="/login"><span className='fw-bold'>Login</span></a>}
+           <span onClick={()=>Navigate('/login')} className='fw-bold'>Login</span>}
           <hr />
         </div>
 
