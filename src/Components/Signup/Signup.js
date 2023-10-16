@@ -1,22 +1,30 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
-import { FirebaseContext } from '../../store/FirebaseContext';
+import { FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from "firebase/firestore";
 
 export default function Signup() {
-  console.log('ENV' + process.env.REACT_APP_API_KEY);   //test
+  // console.log('ENV' + process.env.REACT_APP_API_KEY);   //test
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
-
   const { firebase } = useContext(FirebaseContext)
   const navigate = useNavigate()
+  const inputFocus = useRef(null)
 
-  const handleSignup = async (event) => {
+  useEffect(() => {
+    function focusInput() {   //focus on name input field
+      inputFocus.current.focus();
+    }
+    focusInput()
+  }, [])
+  
+
+  const handleSignup = async (event) => {     //Submit the signup data and redirect to login
     try {
       event.preventDefault()
       setName(name.trimEnd());
@@ -60,8 +68,8 @@ export default function Signup() {
       <div className="row mx-5 p-4 ">
         <div className="col-12 col-md-4 p-4"></div>
         <div className="col-12 col-md-4 p-4 box">
-          <div className="text-center ">
-            <img width="150em" src={Logo} alt='OLX-Logo'></img>
+          <div className="text-center" style={{ cursor: 'pointer' }}>
+            <img width="150em" src={Logo} onClick={() => navigate('/')} alt='OLX-Logo'></img>
           </div>
 
           <div className="px-3 pb-3">
@@ -71,7 +79,7 @@ export default function Signup() {
                 <div className="mb-3">
                   <label htmlFor="text" className="form-label">Name</label>
                   <input type="text" placeholder="Enter your first name" pattern="[A-Za-z ]*" minLength="3"
-                    name="firstName" className="form-control" id="firstName" required
+                    name="firstName" className="form-control" id="firstName" required ref={inputFocus}
                     value={name} onChange={(input) => setName(input.target.value.trimStart())} />
                 </div>
 

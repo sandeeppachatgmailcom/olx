@@ -1,11 +1,30 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import './Header.css';
 import OlxLogo from '../../assets/OlxLogo';
 import Search from '../../assets/Search';
 import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
+import { AuthContext, FirebaseContext } from '../../store/Context';
+
 function Header() {
+
+  const { user } = useContext(AuthContext);
+  const { firebase } = useContext(FirebaseContext)
+
+  function handleLogout() {
+    let confirmLogout = window.confirm("Are you sure you want to logout?");   //test
+    if (!confirmLogout) return
+    const auth = firebase.firebaseAuth.getAuth();
+    firebase.firebaseAuth.signOut(auth).then(() => {
+      // Sign-out successful.
+      alert ('Successfully logged out');  //test
+    }).catch((error) => {
+      console.log(error.message);
+      alert('Unable to Logout | '+error.message);
+    });
+  }
+
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
@@ -18,7 +37,7 @@ function Header() {
           <Arrow></Arrow>
         </div>
         <div className="productSearch">
-          <div className="input ps-2">
+          <div className="input p-2">
             <input
               type="text"
               placeholder="Find car,mobile phone and more..."
@@ -28,14 +47,16 @@ function Header() {
             <Search color="#ffffff"></Search>
           </div>
         </div>
-        <div className="language">
-          <span> ENGLISH </span>
-          <Arrow></Arrow>
-        </div>
+
         <div className="loginPage">
-          <a href="/login">
-          <span className='fw-bold'>Login</span>
-          </a>
+          {user ?
+            <>
+              <span className='fw-bold'>{`Welcome ${user.displayName}`}</span>
+              <br />
+              <h6 onClick={handleLogout} className='text-end'>Logout</h6>
+            </>
+            :
+            <a href="/login"><span className='fw-bold'>Login</span></a>}
           <hr />
         </div>
 
