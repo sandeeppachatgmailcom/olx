@@ -5,7 +5,6 @@
   width: 100vw;
   z-index: 999;
 }
-
 .headerChildDiv {
   width: 100%;
   display: flex;
@@ -152,9 +151,6 @@
   color: #002f34;
 }
 
-/* .sellMenu .sellMenuContent svg {
-  align-items: center;
-} */
 .sellMenu .sellMenuContent span {
   margin-left: 5px;
 }

@@ -6,11 +6,13 @@ import Arrow from '../../assets/Arrow';
 import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext, FirebaseContext } from '../../store/Context';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
 
   const { user } = useContext(AuthContext);
   const { firebase } = useContext(FirebaseContext)
+  const Navigate = useNavigate()
 
   function handleLogout() {
     let confirmLogout = window.confirm("Are you sure you want to logout?");   //test
@@ -18,17 +20,22 @@ function Header() {
     const auth = firebase.firebaseAuth.getAuth();
     firebase.firebaseAuth.signOut(auth).then(() => {
       // Sign-out successful.
-      alert ('Successfully logged out');  //test
+      alert('Successfully logged out');  //test
     }).catch((error) => {
       console.log(error.message);
-      alert('Unable to Logout | '+error.message);
+      alert('Unable to Logout | ' + error.message);
     });
+  }
+
+  function sellButtonHandler() {
+    if (user) Navigate('/create')
+    else Navigate('/login')
   }
 
   return (
     <div className="headerParentDiv">
       <div className="headerChildDiv">
-        <div className="brandName ps-3">
+        <div onClick={() => Navigate('/')} className="brandName ps-3" style={{ cursor: 'pointer' }}>
           <OlxLogo></OlxLogo>
         </div>
         <div className="placeSearch">
@@ -60,7 +67,7 @@ function Header() {
           <hr />
         </div>
 
-        <div className="sellMenu me-4">
+        <div onClick={sellButtonHandler} className="sellMenu me-4">
           <SellButton></SellButton>
           <div className="sellMenuContent">
             <SellButtonPlus></SellButtonPlus>
