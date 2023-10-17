@@ -3,6 +3,8 @@ import Logo from '../../olx-logo.png';
 import './Login.css';
 import { FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -30,12 +32,23 @@ function Login() {
         .then((userCredential) => {
           // Signed in 
           const user = userCredential.user;
-          console.log(user.displayName+" Logged in")   //test
-          alert("Logged IN")
+          console.log(user.displayName + " Logged in")   //test
+          // alert("Logged IN")
+          Swal.fire({ position: 'top-end', icon: 'success', text: 'Login success', width: 200, showConfirmButton: false, timer: 1500 })
           navigate('/')
         }).catch((err) => {
-          if(err.message ==="Firebase: Error (auth/network-request-failed).")  alert("Network Error => "+ err.message)
-          else alert("Wrong Credentials =>"+ err.message)
+          if (err.message === "Firebase: Error (auth/network-request-failed).") {
+            Swal.fire({
+              icon: 'warning',
+              title: 'Network Error',
+            })
+          }
+          else {
+            Swal.fire({
+              icon: 'error',
+              title: 'Wrong Credentials',
+            })
+          }
         })
 
     } catch (error) {
@@ -75,7 +88,7 @@ function Login() {
                 <div className="text-center mb-2">
                   <button type="submit" className="btn btn-primary w-50">Login</button>
                 </div>
-                <p className="text-center">New to OLX? <span onClick={() => navigate("/signup")} style={{cursor:'pointer'}}>Signup</span></p>
+                <p className="text-center">New to OLX? <span onClick={() => navigate("/signup")} style={{ cursor: 'pointer' }}>Signup</span></p>
               </div>
             </form>
           </div>

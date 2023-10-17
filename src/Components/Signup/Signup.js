@@ -4,9 +4,9 @@ import './Signup.css';
 import { FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from "firebase/firestore";
+import Swal from 'sweetalert2';
 
 export default function Signup() {
-  // console.log('ENV' + process.env.REACT_APP_API_KEY);   //test
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ export default function Signup() {
     }
     focusInput()
   }, [])
-  
+
 
   const handleSignup = async (event) => {     //Submit the signup data and redirect to login
     try {
@@ -35,7 +35,7 @@ export default function Signup() {
       const auth = firebase.firebaseAuth.getAuth();
       await firebase.firebaseAuth.createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {  // Signed up 
-        
+
           const user = userCredential.user;
 
           const userDocData = {
@@ -50,8 +50,7 @@ export default function Signup() {
               const usersCollection = collection(firebase.db, "users");
               await addDoc(usersCollection, userDocData)
                 .then((docRef) => {
-                  // console.log("Document added with ID: ", docRef.id);  //test
-                  alert('User account created successfully');     //test
+                  Swal.fire({ position: 'top-center', icon: 'success', text: 'User account created successfully', width: 340, showConfirmButton: false, timer: 1500 })
                   navigate('/login');
                 })
                 .catch((error) => {
@@ -88,14 +87,14 @@ export default function Signup() {
                   <label htmlFor="email" className="form-label">Email address</label>
                   <input type="email" name="email" className="form-control" id="email" pattern="^(?=.*[@])(?=.*[.]).{5,}$"
                     placeholder="Enter email ID" required
-                    value={email} onChange={(input) => setEmail(input.target.value)} />
+                    value={email} onChange={(input) => setEmail(input.target.value.trimStart())} />
                 </div>
 
                 <div className="mb-3">
                   <label htmlFor="number" className="form-label">Phone number</label>
                   <input type="tel" name="phone" className="form-control" id="phone" pattern="[0-9]*"
                     minLength="10" placeholder="Enter contact number" required
-                    value={phone} onChange={(input) => setPhone(input.target.value)} />
+                    value={phone} onChange={(input) => setPhone(input.target.value.trimStart())} />
                 </div>
 
                 <div className="mb-3">
@@ -108,7 +107,7 @@ export default function Signup() {
                 <div className="text-center mb-2">
                   <button type="submit" className="btn btn-primary w-50">Signup</button>
                 </div>
-                <p className="text-center">Already have account? <span onClick={() => navigate("/login")} style={{cursor:'pointer'}}>Login</span></p>
+                <p className="text-center">Already have account? <span onClick={() => navigate("/login")} style={{ cursor: 'pointer' }}>Login</span></p>
               </div>
             </form>
           </div>

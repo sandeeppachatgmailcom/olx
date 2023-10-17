@@ -31,28 +31,40 @@ function View() {
 
 
   return (
-    <div className="viewParentDiv">
-      <div className="imageShowDiv">
-        <img
-          src={postDetails ? postDetails.imageURL : ''}
-          alt="product"
-        />
-      </div>
-      <div className="rightSection">
-        <div className="productDetails">
-          <p>&#x20B9;{postDetails ? postDetails.price : ''}</p>
-          <span>{postDetails ? postDetails.productName : ''}</span>
-          <p>{postDetails ? postDetails.category : ''}</p>
-          <p>{postDetails ? postDetails.productDetails : ''}</p>
-          <span>{postDetails ? postDetails.createdAt : ''}</span>
+    <>
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-8 p-3 text-center">
+
+            <div className="h-100 ">
+              <img className='curv'
+                src={postDetails ? postDetails.imageURL : ''}
+                alt="product"
+              />
+            </div>
+
+          </div>
+          <div className="col-sm-4 py-5">
+            <div className="card bg-light mb-4">
+              <h2 className='fw-bold'>&#x20B9;{postDetails ? postDetails.price : ''}/-</h2>
+              <h4>{postDetails ? postDetails.productName : ''}</h4>
+              <p>{postDetails ? postDetails.category : ''}</p>
+              <p>{postDetails ? postDetails.productDetails : ''}</p>
+              <hr />
+              <span>{postDetails ? postDetails.createdAt : ''}</span>
+            </div>
+            <div className="card">
+              <div className="contactDetails">
+                <p>Seller details</p>
+                <h5>{sellerDetails ? sellerDetails.name : ""}</h5>
+                <p>&#9742; {sellerDetails ? sellerDetails.phone : ''}</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="contactDetails">
-          <p>Seller details</p>
-          <p>{sellerDetails ? sellerDetails.name : ""}</p>
-          <p>{sellerDetails ? sellerDetails.phone : ''}</p>
-        </div>
       </div>
-    </div>
+
+    </>
   );
 }
 export default View;

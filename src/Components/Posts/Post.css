@@ -31,7 +31,7 @@
 
 .moreView .cards {
   white-space: nowrap;
-  overflow-x: scroll;
+  overflow-x: hidden;
   overflow-y: hidden;
 }
 
@@ -40,9 +40,13 @@
   padding: 13px;
   max-width: 222px;
   width: 222px;
-  height: 270px;
+  /* height: 270px; */
   display: inline-block;
   cursor: pointer;
+  transition: 0.3s;
+}
+.card:hover{
+  transform: scale(1.05);
 }
 
 .card .favorite {
@@ -58,9 +62,9 @@
 }
 
 .card .image img {
-  height: 100px;
+  height: 8em;
   max-width: 100%;
-  max-height: 100%;
+  /* max-height: 100%; */
   min-height: 100%;
   text-align: center;
 }

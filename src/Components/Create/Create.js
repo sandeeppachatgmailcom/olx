@@ -5,6 +5,7 @@ import { AuthContext, FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from "firebase/firestore";
 import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
+import Swal from 'sweetalert2';
 
 const Create = () => {
   const [productName, setProductName] = useState('')
@@ -42,13 +43,14 @@ const Create = () => {
             category,
             productDetails,
             price,
-            imageURL : url,
+            imageURL: url,
             userID: user.uid,
             createdAt: date.toDateString()
           })
             .then((docRef) => {
               console.log('Ad created successfully ID =>', docRef.id);   //test
-              alert('Ad created successfully');     //test
+              Swal.fire({ position: 'top-center', icon: 'success', text: 'Ad created successfully', width: 340, showConfirmButton: false, timer: 1500 })
+
               navigate('/');
             }).catch((err) => { throw Error("Error creating ad") }) //error alert
         });
@@ -71,13 +73,13 @@ const Create = () => {
               <div className="col-12 mb-3">
                 <label htmlFor="product_name" className="form-label">Product Name</label>
                 <input type="text" className="form-control" name="product_name" placeholder="Enter the product name"
-                  required value={productName} onChange={(e) => setProductName(e.target.value)} />
+                  required value={productName} onChange={(e) => setProductName(e.target.value.trimStart())} />
               </div>
 
               <div className="col-12 mb-3">
                 <label htmlFor="Category" className="form-label">Category</label>
                 <input type="text" className="form-control" name="Category" placeholder="Enter the category"
-                  required value={category} onChange={(e) => setCategory(e.target.value)} />
+                  required value={category} onChange={(e) => setCategory(e.target.value.trimStart())} />
               </div>
 
               <div className="col-12">

@@ -29,7 +29,7 @@ function Posts() {
     }
   }, [firebase.db])
   // console.log(products)   //test
-
+  const limitedArray = products.slice(0, 5)
   return (
     <div className="postParentDiv">
       <div className="moreView">
@@ -37,10 +37,10 @@ function Posts() {
           <span>Quick Menu</span>
           <span className='me-3'>View more</span>
         </div>
-        <div className="cards">
+        <div className="cards image">
 
-
-          {products.map((product) => {
+        
+          {limitedArray.map((product) => {
             return (
               <div className="card" onClick={() => { setPostDetails(product); Navigate('/view') }}>
                 <div className="favorite">
@@ -49,6 +49,7 @@ function Posts() {
                 <div className="image mb-3">
                   <img src={product.imageURL} alt="product" />
                 </div>
+             
                 <div className="content">
                   <h4 >&#x20B9; {product.price}</h4>
                   <span className="kilometer">{product.productName}</span>
@@ -68,8 +69,9 @@ function Posts() {
         <div className="heading">
           <span>Fresh recommendations</span>
         </div>
-        <div className="cards">
-          <div className="card">
+        <div className="container-fluid mt-4">
+          
+          <div className="card mb-4">
             <div className="favorite">
               <Heart></Heart>
             </div>
@@ -82,9 +84,31 @@ function Posts() {
               <p className="name"> YAMAHA R15V3</p>
             </div>
             <div className="date">
-              <span>10/5/2021</span>
+              <span>Tue Oct 11 2023</span>
             </div>
           </div>
+
+          {products.map((product) => {
+            return (
+              <div className="card" onClick={() => { setPostDetails(product); Navigate('/view') }}>
+                <div className="favorite">
+                  <Heart></Heart>
+                </div>
+                <div className="image mb-3">
+                  <img src={product.imageURL} alt="product" />
+                </div>
+             
+                <div className="content">
+                  <h4 >&#x20B9; {product.price}</h4>
+                  <span className="kilometer">{product.productName}</span>
+                  <p className="name">{product.category}</p>
+                </div>
+                <div className="date">
+                  <span>{product.createdAt}</span>
+                </div>
+              </div>)
+          })}
+
         </div>
       </div>
     </div>

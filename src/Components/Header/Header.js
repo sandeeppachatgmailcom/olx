@@ -7,6 +7,7 @@ import SellButton from '../../assets/SellButton';
 import SellButtonPlus from '../../assets/SellButtonPlus';
 import { AuthContext, FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 function Header() {
 
@@ -15,16 +16,25 @@ function Header() {
   const Navigate = useNavigate()
 
   function handleLogout() {
-    let confirmLogout = window.confirm("Are you sure you want to logout?");   //test
-    if (!confirmLogout) return
-    const auth = firebase.firebaseAuth.getAuth();
-    firebase.firebaseAuth.signOut(auth).then(() => {
-      // Sign-out successful.
-      alert('Successfully logged out');  //test
-    }).catch((error) => {
-      console.log(error.message);
-      alert('Unable to Logout | ' + error.message);
-    });
+    Swal.fire({  //logout confirmation check
+      text: "Are you sure you want to logout?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        const auth = firebase.firebaseAuth.getAuth();
+        firebase.firebaseAuth.signOut(auth).then(() => {
+          // Sign-out successful.
+          Swal.fire({ position: 'top-end', icon: 'success', text: 'Logout success', width: 200, showConfirmButton: false, timer: 1500 })
+        }).catch((error) => {
+          console.log(error.message);
+          alert('Unable to Logout | ' + error.message);
+        });
+      }
+    })
   }
 
   function sellButtonHandler() {
@@ -63,7 +73,7 @@ function Header() {
               <h6 onClick={handleLogout} className='text-end'>Logout</h6>
             </>
             :
-           <span onClick={()=>Navigate('/login')} className='fw-bold'>Login</span>}
+            <span onClick={() => Navigate('/login')} className='fw-bold'>Login</span>}
           <hr />
         </div>
 
