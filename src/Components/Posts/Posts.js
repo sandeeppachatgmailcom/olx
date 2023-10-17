@@ -1,9 +1,30 @@
-import React from 'react';
-
+import React, { useContext, useEffect, useState } from 'react';
 import Heart from '../../assets/Heart';
 import './Post.css';
+import { FirebaseContext } from '../../store/Context';
+import { collection, getDocs } from "firebase/firestore";
+
 
 function Posts() {
+  const { firebase } = useContext(FirebaseContext);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    getPosts()
+    async function getPosts() {
+      //get posts data from firebase on page load
+      const querySnapshot = await getDocs(collection(firebase.db, "products"));
+      const allPosts = querySnapshot.docs.map((doc) => {
+        return { //returning array of products
+          id: doc.id, // id of product document
+          ...doc.data(),  // all the fields inside product document
+        }
+      })
+      setProducts(allPosts)
+
+    }
+  }, [firebase.db])
+  console.log(products)
 
   return (
     <div className="postParentDiv">
@@ -34,7 +55,7 @@ function Posts() {
         </div>
       </div>
 
-      
+
       <div className="recommendations">
         <div className="heading">
           <span>Fresh recommendations</span>

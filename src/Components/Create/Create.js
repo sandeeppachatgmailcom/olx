@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import { AuthContext, FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc } from "firebase/firestore";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const Create = () => {
   const [productName, setProductName] = useState('')
@@ -16,33 +17,42 @@ const Create = () => {
   const { firebase } = useContext(FirebaseContext)
   const navigate = useNavigate();
 
-  async function handleCreateAd(e) {
+  async function handleCreateAd(e) {   //On click of upload and submit
     e.preventDefault()
     console.log('create ad', productName, category, productDetails, price, image.name)  //test mode
     if (!user) return alert('Please login to continue');   // ensure user is logged in
     const date = new Date()
     try {
-      // Upload an image to Firebase Storage
-      const storageRef = firebase.storage().ref(`/image/${image.name}`);
-      const snapshot = await storageRef.put(image);
-      const imageURL = await snapshot.ref.getDownloadURL();
 
-      // Add the product data to Firebase Firestore
-      const productCollection = collection(firebase.db, "products");
-      await addDoc(productCollection, {
-        productName,
-        category,
-        productDetails,
-        price,
-        imageURL,
-        userID: user.uid,
-        createdAt: date.toDateString()
-      })
-        .then((docRef) => {
-          console.log('Ad created successfully ID =>', docRef.id);   //test
-          alert('Ad created successfully');     //test
-          navigate('/');
-        }).catch((err) => { throw Error("Error creating ad") })
+      // Upload an image to Firebase Storage
+      const storage = getStorage();
+      const storageRef = ref(storage, `/image/${image.name}`);
+
+      // 'file' comes from the Blob or File API
+      uploadBytes(storageRef, image).then((snapshot) => {
+        console.log('Uploaded a blob or file!');  //test
+
+        getDownloadURL(storageRef).then(async (url) => {
+          console.log('URL' + url);  //test
+
+          // Add the product data to Firebase Firestore
+          const productCollection = collection(firebase.db, "products");
+          await addDoc(productCollection, {
+            productName,
+            category,
+            productDetails,
+            price,
+            imageURL : url,
+            userID: user.uid,
+            createdAt: date.toDateString()
+          })
+            .then((docRef) => {
+              console.log('Ad created successfully ID =>', docRef.id);   //test
+              alert('Ad created successfully');     //test
+              navigate('/');
+            }).catch((err) => { throw Error("Error creating ad") }) //error alert
+        });
+      });
 
     } catch (error) {
       console.error('Error creating ad:', error);
