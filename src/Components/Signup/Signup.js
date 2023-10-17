@@ -3,7 +3,7 @@ import Logo from '../../olx-logo.png';
 import './Signup.css';
 import { FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
-import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc} from "firebase/firestore";
 import Swal from 'sweetalert2';
 
 export default function Signup() {
@@ -22,7 +22,6 @@ export default function Signup() {
     }
     focusInput()
   }, [])
-
 
   const handleSignup = async (event) => {     //Submit the signup data and redirect to login
     try {
@@ -60,6 +59,13 @@ export default function Signup() {
         })
     } catch (error) {
       console.log(error.message);
+      if(error.message === "Firebase: Error (auth/email-already-in-use).") {
+        Swal.fire({
+          icon: 'error',
+          title: 'Existing user found !',
+          text:'Please login to continue'
+        })
+      }
     }
   }
 
