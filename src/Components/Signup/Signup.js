@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import Logo from '../../olx-logo.png';
 import './Signup.css';
-import { FirebaseContext } from '../../store/Context';
+import { AuthContext, FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import { collection, addDoc} from "firebase/firestore";
 import Swal from 'sweetalert2';
@@ -15,13 +15,15 @@ export default function Signup() {
   const { firebase } = useContext(FirebaseContext)
   const navigate = useNavigate()
   const inputFocus = useRef(null)
+  const {user} = useContext(AuthContext)
 
   useEffect(() => {
+    if(user)navigate('/')
     function focusInput() {   //focus on name input field
       inputFocus.current.focus();
     }
     focusInput()
-  }, [])
+  }, [user,navigate])
 
   const handleSignup = async (event) => {     //Submit the signup data and redirect to login
     try {

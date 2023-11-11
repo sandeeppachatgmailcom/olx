@@ -39,7 +39,7 @@ function Posts() {
         </div>
         <div className="cards image">
 
-        
+
           {limitedArray.map((product) => {
             return (
               <div className="card" onClick={() => { setPostDetails(product); Navigate('/view') }}>
@@ -49,7 +49,7 @@ function Posts() {
                 <div className="image mb-3">
                   <img src={product.imageURL} alt="product" />
                 </div>
-             
+
                 <div className="content">
                   <h4 >&#x20B9; {product.price}</h4>
                   <span className="kilometer">{product.productName}</span>
@@ -70,7 +70,7 @@ function Posts() {
           <span>Fresh recommendations</span>
         </div>
         <div className="container-fluid mt-4">
-          
+
           <div className="card mb-4">
             <div className="favorite">
               <Heart></Heart>
@@ -90,14 +90,14 @@ function Posts() {
 
           {products.map((product) => {
             return (
-              <div className="card" onClick={() => { setPostDetails(product); Navigate('/view') }}>
+              <div className="card mb-4" onClick={() => { setPostDetails(product); Navigate('/view') }}>
                 <div className="favorite">
                   <Heart></Heart>
                 </div>
                 <div className="image mb-3">
                   <img src={product.imageURL} alt="product" />
                 </div>
-             
+
                 <div className="content">
                   <h4 >&#x20B9; {product.price}</h4>
                   <span className="kilometer">{product.productName}</span>

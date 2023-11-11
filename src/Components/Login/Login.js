@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect, useRef } from 'react';
 import Logo from '../../olx-logo.png';
 import './Login.css';
-import { FirebaseContext } from '../../store/Context';
+import { AuthContext, FirebaseContext } from '../../store/Context';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -12,13 +12,15 @@ function Login() {
   const { firebase } = useContext(FirebaseContext)
   const navigate = useNavigate()
   const emailInput = useRef(null)
+  const {user} = useContext(AuthContext)
 
   useEffect(() => {
+    if(user)navigate('/')
     function focusInput() {  //focus on email input field
       emailInput.current.focus();
     }
     focusInput()
-  }, [])
+  }, [user,navigate])
 
   const handleLogin = async (event) => {      //Submit the Login data and redirect to Home
     try {
